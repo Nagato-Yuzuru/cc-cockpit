@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'claude-code/testing'
 
-import { isSupportedEngine } from '../hooks/core/version.ts'
+import { isSupportedEngine } from './version.ts'
 
 describe('isSupportedEngine', () => {
   test('accepts the minimum and later versions', () => {

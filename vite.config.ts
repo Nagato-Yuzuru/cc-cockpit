@@ -58,14 +58,42 @@ export default defineConfig({
     },
     overrides: [
       {
-        // The core is pure: it reads no view code,
-        // and it reaches the engine only through types.
-        files: ['hooks/core/**'],
+        // A feature reads shared code, never another feature, so a feature
+        // can be deleted with its directory.
+        files: ['hooks/features/**'],
         rules: {
           'typescript/no-restricted-imports': [
             'error',
             {
-              patterns: [{ group: ['**/view/**', '**/view'], message: 'The core does not read the view layer.' }],
+              patterns: [
+                { group: ['../*/**', '!../../**'], message: 'A feature does not import another feature; move the code to shared/.' },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        // Shared code does not depend on a feature.
+        files: ['hooks/shared/**'],
+        rules: {
+          'typescript/no-restricted-imports': [
+            'error',
+            { patterns: [{ group: ['**/features/**'], message: 'Shared code does not import a feature.' }] },
+          ],
+        },
+      },
+      {
+        // The core is pure: it reads no view code,
+        // and it reaches the engine only through types.
+        files: ['hooks/features/*/core.ts'],
+        rules: {
+          'typescript/no-restricted-imports': [
+            'error',
+            {
+              patterns: [
+                { group: ['../*/**', '!../../**'], message: 'A feature does not import another feature; move the code to shared/.' },
+                { group: ['**/view', '**/view.tsx'], message: 'The core does not read the view.' },
+              ],
               paths: [
                 { name: 'claude-code', message: 'The core does not call the engine; import its types only.', allowTypeImports: true },
               ],
@@ -81,7 +109,7 @@ export default defineConfig({
       {
         // A test builds engine answers and fixtures by hand; the assertion or
         // the untyped edit is the fixture's claim, and the test checks it.
-        files: ['tests/**'],
+        files: ['**/*.test.ts', '**/*.test.tsx'],
         rules: {
           'typescript/no-unsafe-type-assertion': 'off',
           'typescript/no-explicit-any': 'off',
