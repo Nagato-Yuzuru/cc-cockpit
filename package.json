@@ -1,0 +1,22 @@
+{
+  "name": "cc-cockpit",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=12"
+  },
+  "scripts": {
+    "dev": "claude --plugin-dir .",
+    "check": "vp check && jactionlint",
+    "fix": "vp check --fix",
+    "validate": "claude plugin validate .",
+    "test": "claude plugin test .",
+    "verify": "pnpm check && pnpm validate && pnpm test"
+  },
+  "devDependencies": {
+    "@anthropic-ai/claude-code": "2.1.322",
+    "@types/node": "24.19.2",
+    "vite-plus": "1.2.0"
+  }
+}

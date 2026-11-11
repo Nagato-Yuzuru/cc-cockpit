@@ -1,0 +1,9 @@
+{
+  "name": "cockpit",
+  "version": "0.1.0",
+  "description": "Personal Claude Code interface additions, such as a context window meter above the prompt",
+  "author": {
+    "name": "Nagato Yuzuru"
+  },
+  "license": "WTFPL"
+}

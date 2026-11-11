@@ -1,0 +1,13 @@
+[tools]
+node = "24.22.0"
+pnpm = "12.14.0"
+prek = "0.5.5"
+git-cliff = "2.14.2"
+jactionlint = { version = "2.4.0", workflow = "release.yaml" }
+
+[settings]
+lockfile = true
+minimum_release_age = "7d"
+
+[hooks]
+postinstall = "prek install"
