@@ -45,7 +45,12 @@ git cliff "HEAD..$probe" > /dev/null
 id = "vp-check"
 name = "vp check (format, lint, types)"
 language = "system"
-entry = "pnpm exec vp check --no-error-on-unmatched-pattern"
+# The hook checks the whole project, not the staged files. With a subset of
+# files, tsgolint can report a false await-thenable error
+# (https://github.com/oxc-project/tsgolint/issues/1291), and prek splits the
+# files into batches, so the result depends on the batch.
+entry = "pnpm exec vp check"
+pass_filenames = false
 types_or = ["ts", "tsx", "javascript", "json", "markdown", "yaml", "toml"]
 
 [[repos.hooks]]
