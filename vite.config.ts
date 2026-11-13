@@ -10,6 +10,16 @@ if (!hasEngineTypes) {
   console.warn('No engine types in .claude-plugin/types/: type-aware lint and the type check are off. Run pnpm dev once to get them.')
 }
 
+// On the engine's `On` overloads, `no-misused-promises` in oxlint-tsgolint
+// 7.0.2006 and earlier puts wrong types in the checker cache
+// (https://github.com/oxc-project/tsgolint/issues/1291). A later
+// `await-thenable` then reports a promise as not thenable. tsgolint lints a file
+// on any free checker, so this occurs on about 1 run in 4. With `affinity`,
+// each file is linted on the checker that type-checked it, and the false
+// reports stop. Remove this when vite-plus ships a tsgolint release that has
+// https://github.com/oxc-project/tsgolint/pull/1334.
+process.env['OXLINT_TSGOLINT_CHECKER_SCHEDULING'] ??= 'affinity'
+
 const generated = ['.claude-plugin/types/']
 
 export default defineConfig({
