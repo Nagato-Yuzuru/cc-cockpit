@@ -1,6 +1,8 @@
 # cc-cockpit
 
-cockpit is a Claude Code mod. It adds interface parts to the Claude Code terminal for one user's own work. The first part is a context window meter above the prompt: a colored bar that shows how much of the window is used, how much is left before automatic compaction, and a toast when the use crosses a threshold.
+cockpit is a Claude Code mod. It adds interface parts to the Claude Code terminal for one user's own work. The parts share one row above the prompt:
+
+- **Context meter.** A colored bar that shows how much of the window is used and how much is left before automatic compaction. A toast tells when the use crosses 75% and 90% of that limit.
 
 The mod uses the function hooks API, which is early access. It needs Claude Code 2.1.322 or later.
 

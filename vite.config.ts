@@ -125,6 +125,8 @@ export default defineConfig({
           'typescript/no-explicit-any': 'off',
           'typescript/no-unsafe-assignment': 'off',
           'typescript/no-unsafe-member-access': 'off',
+          // A test acts on one mounted drawing at a time, surface after surface.
+          'no-await-in-loop': 'off',
         },
       },
     ],
