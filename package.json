@@ -15,7 +15,7 @@
     "verify": "pnpm check && pnpm validate && pnpm test"
   },
   "devDependencies": {
-    "@anthropic-ai/claude-code": "2.1.322",
+    "@anthropic-ai/claude-code": "2.1.325",
     "@types/node": "26.6.6",
     "vite-plus": "1.2.0"
   }
