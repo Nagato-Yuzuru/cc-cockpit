@@ -9,6 +9,21 @@ export type Severity = 'ok' | 'warn' | 'high'
 // cache-hit: input tokens by how the prompt cache served them.
 export type Totals = { read: number; written: number; uncached: number }
 
+// o11y-link: whether the OTLP receiver takes the session's records.
+export type LinkStatus =
+  // Telemetry is off for the session, or no signal exports over OTLP.
+  | 'off'
+  // A signal exports over a protocol the mod cannot send, such as gRPC.
+  | 'unprobeable'
+  // No probe has finished yet.
+  | 'unknown'
+  | 'up'
+  // The receiver answered an export with an error status.
+  | 'rejected'
+  // Nothing answered: the receiver is not running, or the endpoint is wrong.
+  | 'down'
+export type Link = { status: LinkStatus; checkedAt: number | null }
+
 declare module 'claude-code' {
   interface PluginState {
     cockpit: {
@@ -18,6 +33,7 @@ declare module 'claude-code' {
       // The last main-loop turn, and every main-loop turn of the session.
       'cache-hit.last': Shaped<Totals | null>
       'cache-hit.session': Shaped<Totals>
+      'o11y-link.link': Shaped<Link>
     }
   }
 }
