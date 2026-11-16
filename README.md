@@ -2,8 +2,6 @@
 
 My own Claude Code mod. It is for my personal use only.
 
-It needs Claude Code 2.1.322 or later.
-
 ## Set up
 
 ```sh
