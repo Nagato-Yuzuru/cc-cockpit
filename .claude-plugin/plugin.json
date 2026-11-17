@@ -2,7 +2,7 @@
   "name": "cockpit",
   "description": "Personal Claude Code interface additions, such as a context window meter above the prompt",
   "engines": {
-    "claude-code": ">=2.1.322"
+    "claude-code": ">=2.1.326"
   },
   "author": {
     "name": "Nagato Yuzuru"
