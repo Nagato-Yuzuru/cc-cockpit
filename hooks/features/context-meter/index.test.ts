@@ -83,5 +83,5 @@ test('with auto-compact off, the meter measures against the window', async ($, o
     expect((await ui.find({ type: 'Text', text: /^ctx/ }))?.text).toBe('ctx ████████░░ 75% of 200k · 50k left')
     await ui.unmount()
   }
-  expect(toasts).toEqual(['Context is 75% of the way to its limit'])
+  expect(toasts).toEqual(['🟡 Context is 75% of the way to its limit'])
 })

@@ -2,6 +2,7 @@ import { atom, read, update } from 'claude-code'
 import type { On } from 'claude-code'
 
 import { joinSegment } from '../../shared/band.tsx'
+import { notify } from '../../shared/notice.ts'
 import { nextTold, toMeter, toReading, type Reading, type Severity } from './core.ts'
 import { view } from './view.tsx'
 
@@ -23,7 +24,7 @@ export function install(on: On): void {
 
       const step = nextTold(await read($, told), toMeter(now).severity)
       await update($, told, () => step.told)
-      if (step.toast !== undefined) $.ui.toast(step.toast)
+      if (step.toast !== undefined) await notify($, step.told === 'high' ? 'error' : 'warn', step.toast)
     } catch {
       // The meter keeps its last reading; the measurement goes on.
     }
