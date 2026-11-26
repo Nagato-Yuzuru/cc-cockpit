@@ -40,6 +40,8 @@ declare module 'claude-code' {
       'cache-hit.session': Shaped<Totals>
       'o11y-link.link': Shaped<Link>
       'notices.log': Shaped<Notice[]>
+      // When the person last opened the log: later notices are unread.
+      'notices.seenAt': Shaped<number>
     }
   }
 }
