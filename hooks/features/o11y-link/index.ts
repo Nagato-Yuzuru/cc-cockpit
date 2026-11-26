@@ -1,6 +1,7 @@
 import { atom, read, update } from 'claude-code'
 import type { EngineInterface, On } from 'claude-code'
 
+import { notify } from '../../shared/notice.ts'
 import {
   alertOf,
   classify,
@@ -8,7 +9,7 @@ import {
   planOf,
   PROBE_EVERY_MS,
   PROBE_TIMEOUT_MS,
-  toastFor,
+  noticeFor,
   type Link,
   type OtelEnv,
   type Probe,
@@ -55,8 +56,8 @@ async function check($: EngineInterface, targets: readonly Target[]): Promise<vo
   const checkedAt = await $.clock.now()
   const before = (await read($, link)).status
   await update($, link, () => ({ status, checkedAt }))
-  const toast = toastFor(before, status)
-  if (toast !== undefined) $.ui.toast(toast)
+  const notice = noticeFor(before, status)
+  if (notice !== undefined) await notify($, notice.level, notice.text)
 }
 
 export function install(on: On): void {

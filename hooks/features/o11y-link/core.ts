@@ -153,12 +153,13 @@ export function classify(probes: readonly Probe[]): Status {
   return 'up'
 }
 
-// A toast tells when a working link breaks and when a broken one comes back.
-// The first probe of a session tells nothing: the footer shows it.
-export function toastFor(before: Status, now: Status): string | undefined {
+// A notice tells when a working link breaks and when a broken one comes back:
+// the edges, not the states. The first probe of a session tells nothing: the
+// footer shows it.
+export function noticeFor(before: Status, now: Status): { level: 'error' | 'info'; text: string } | undefined {
   if (before === now) return undefined
-  if (before === 'up') return 'o11y receiver stopped taking records; they are not exported'
-  if (now === 'up' && (before === 'down' || before === 'rejected')) return 'o11y receiver takes records again'
+  if (before === 'up') return { level: 'error', text: 'o11y receiver stopped taking records; they are not exported' }
+  if (now === 'up' && (before === 'down' || before === 'rejected')) return { level: 'info', text: 'o11y receiver takes records again' }
   return undefined
 }
 

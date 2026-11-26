@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'claude-code/testing'
 
-import { alertOf, classify, isTelemetryOn, parseHeaders, planOf, toastFor } from './core.ts'
+import { alertOf, classify, isTelemetryOn, parseHeaders, planOf, noticeFor } from './core.ts'
 
 const ON = { CLAUDE_CODE_ENABLE_TELEMETRY: '1' } as const
 
@@ -88,12 +88,12 @@ test('the worst answer stands for the link', () => {
 })
 
 test('a toast tells a break and a recovery, not the first probe', () => {
-  expect(toastFor('unknown', 'down')).toBeUndefined()
-  expect(toastFor('unknown', 'up')).toBeUndefined()
-  expect(toastFor('up', 'up')).toBeUndefined()
-  expect(toastFor('up', 'down')).toMatch(/stopped/)
-  expect(toastFor('down', 'up')).toMatch(/again/)
-  expect(toastFor('down', 'rejected')).toBeUndefined()
+  expect(noticeFor('unknown', 'down')).toBeUndefined()
+  expect(noticeFor('unknown', 'up')).toBeUndefined()
+  expect(noticeFor('up', 'up')).toBeUndefined()
+  expect(noticeFor('up', 'down')).toEqual({ level: 'error', text: expect.stringMatching(/stopped/) })
+  expect(noticeFor('down', 'up')).toEqual({ level: 'info', text: expect.stringMatching(/again/) })
+  expect(noticeFor('down', 'rejected')).toBeUndefined()
 })
 
 test('the footer names the link only while records are lost', () => {

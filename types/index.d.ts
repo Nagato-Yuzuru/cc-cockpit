@@ -24,6 +24,11 @@ export type LinkStatus =
   | 'down'
 export type Link = { status: LinkStatus; checkedAt: number | null }
 
+// notices: what the features told the person, in the order told. `at` is
+// milliseconds since the epoch.
+export type NoticeLevel = 'info' | 'warn' | 'error'
+export type Notice = { level: NoticeLevel; text: string; at: number }
+
 declare module 'claude-code' {
   interface PluginState {
     cockpit: {
@@ -34,6 +39,7 @@ declare module 'claude-code' {
       'cache-hit.last': Shaped<Totals | null>
       'cache-hit.session': Shaped<Totals>
       'o11y-link.link': Shaped<Link>
+      'notices.log': Shaped<Notice[]>
     }
   }
 }
